@@ -21,7 +21,11 @@ class _MyAppState extends State<MyApp> {
   TextEditingController textes = TextEditingController();
   TextEditingController amount = TextEditingController();
   String? result = "";
-
+  static const myTextStyle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 25,
+    wordSpacing: 13,
+  );
   void fn() {
     setState(() {
       String? textesVar;
@@ -33,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         debugPrint("$e");
       }
       if (textesVar != null && amountVar != null) {
-        result = (textesVar * amountVar);
+        result = (('$textesVar\n') * amountVar);
       }
     });
   }
@@ -42,17 +46,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const SizedBox(
+              width: double.infinity,
+              height: 100,
+              child: Center(
+                child: Text("Welcome Human!", style: myTextStyle),
+              )),
           SizedBox(
             width: 500,
             height: 100,
             child: TextField(
               controller: textes,
+              cursorColor: Colors.black87,
               decoration: const InputDecoration(
-                hintText: "Enter text:",
-                border: OutlineInputBorder(),
-              ),
+                  hintText: "Enter text:",
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey))),
             ),
           ),
           SizedBox(
@@ -60,25 +72,38 @@ class _MyAppState extends State<MyApp> {
             height: 100,
             child: TextField(
               controller: amount,
+              cursorColor: Colors.black87,
               decoration: const InputDecoration(
-                hintText: "Enter times:",
-                border: OutlineInputBorder(),
-              ),
+                  hintText: "Enter times:",
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey))),
             ),
           ),
-          TextButton(
-              onPressed: fn,
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-                fixedSize: const Size(480, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-              ),
-              child: const Text("Repeat")),
           SizedBox(
+            width: 500,
+            child: TextButton(
+                onPressed: fn,
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 15),
+                  backgroundColor: Colors.grey[400],
+                  foregroundColor: Colors.black,
+                  fixedSize: const Size(480, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                child: const Text("Repeat")),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          SizedBox(
+            width: 500,
             child: Center(
-              child: Text(result!),
+              child: Text(
+                result!,
+                style: myTextStyle,
+              ),
             ),
           )
         ], //column childern
