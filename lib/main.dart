@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
           SizedBox(
             width: 500,
             child: Center(
-              child: Text(
+              child: SelectableText(
                 result!,
                 style: myTextStyle,
               ),
