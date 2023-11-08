@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     home: Scaffold(
-      body: MyApp(),
+      body: Center(
+        child: MyApp(),
+      ),
     ),
   ));
 }
@@ -18,17 +20,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   TextEditingController textes = TextEditingController();
   TextEditingController amount = TextEditingController();
-  String? result;
+  String? result = "";
 
   void fn() {
-    try {
-      String? textesVar = textes.text;
-      int? amountVar = int.parse(amount.text);
-      result = (textesVar * amountVar);
-    } catch (e) {
-      print(e);
-    }
-    debugPrint("${textes.text} and ${amount.text}");
+    setState(() {
+      String? textesVar;
+      int? amountVar;
+      try {
+        textesVar = textes.text;
+        amountVar = int.parse(amount.text);
+      } catch (e) {
+        debugPrint("$e");
+      }
+      if (textesVar != null && amountVar != null) {
+        result = (textesVar * amountVar);
+      }
+    });
   }
 
   @override
@@ -38,24 +45,37 @@ class _MyAppState extends State<MyApp> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            width: 200,
+            width: 500,
+            height: 100,
             child: TextField(
               controller: textes,
               decoration: const InputDecoration(
-                hintText: "Enter text",
+                hintText: "Enter text:",
+                border: OutlineInputBorder(),
               ),
             ),
           ),
           SizedBox(
-            width: 200,
+            width: 500,
+            height: 100,
             child: TextField(
               controller: amount,
               decoration: const InputDecoration(
-                hintText: "Enter times",
+                hintText: "Enter times:",
+                border: OutlineInputBorder(),
               ),
             ),
           ),
-          TextButton(onPressed: fn, child: const Text("Repeat")),
+          TextButton(
+              onPressed: fn,
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                fixedSize: const Size(480, 50),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+              child: const Text("Repeat")),
           SizedBox(
             child: Center(
               child: Text(result!),
